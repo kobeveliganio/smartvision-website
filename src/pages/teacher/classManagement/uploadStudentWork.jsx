@@ -24,10 +24,10 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const formData = new FormData();
       formData.append("image", file);
 
-      const response = await fetch("https://braille-ml-api.onrender.com/predict", {
+      const response = await fetch(process.env.REACT_APP_ML_API_URL, {
         method: "POST",
         headers: {
-          Authorization: "Bearer my-secret-key-123",
+          Authorization: `Bearer ${process.env.REACT_APP_ML_API_KEY}`,
         },
         body: formData,
       });
