@@ -69,7 +69,7 @@ export default function Login() {
         <div className="login-card">
           <div className="brand-section">
             <img
-              src="src/assets/logoname.png"
+              src="/logoname.png"
               alt="SmartVision Logo"
               className="brand-logo"
             />

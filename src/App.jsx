@@ -65,7 +65,7 @@ export default function App() {
       <nav className="navbar navbar-expand-lg navbar-dark fixed-top smart-nav">
         <div className="container-fluid px-4">
           <a className="navbar-brand d-flex align-items-center" href="#">
-            <img src="src\assets\logoname.png" alt="SmartVision Logo" className="navbar-logo me-2" />
+            <img src="/logoname.png" alt="SmartVision Logo" className="navbar-logo me-2" />
           </a>
           <button
             className="navbar-toggler border-0 shadow-none"
@@ -87,7 +87,7 @@ export default function App() {
 
       {/* Hero Section */}
       <section className="hero text-center position-relative">
-        <img src="src\assets\bg.JPEG" alt="SmartVision Background" className="hero-bg" />
+        <img src="/bg.JPEG" alt="SmartVision Background" className="hero-bg" />
         <div className="overlay"></div>
         <div className="container position-relative">
           <h1 className="display-5 fw-bold mb-3 hero-title">

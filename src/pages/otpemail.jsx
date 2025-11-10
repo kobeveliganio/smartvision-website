@@ -59,7 +59,7 @@ export default function OTPEmail() {
         <div className="login-card">
           <div className="brand-section">
             <img
-              src="src/assets/logoname.png"
+              src="logoname.png"
               alt="Smart Vision Logo"
               className="brand-logo"
             />

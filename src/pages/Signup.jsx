@@ -69,7 +69,7 @@ export default function Signup() {
       <div className="right2-div">
         <div className="login2-card">
           <div className="brand2-section">
-            <img src="src/assets/logoname.png" alt="SmartVision Logo" className="brand2-logo" />
+            <img src="/logoname.png" alt="SmartVision Logo" className="brand2-logo" />
             <p className="brand2-subtitle">Braille-Text Application</p>
           </div>
 
