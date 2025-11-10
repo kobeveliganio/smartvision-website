@@ -32,10 +32,21 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         body: formData,
       });
 
-      if (!response.ok) throw new Error("ML API failed");
-      const result = await response.json();
+      // 🔹 2. Check if response is ok
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`ML API failed: ${response.status} ${text}`);
+      }
 
-      // 🔹 2. Convert base64 to blob
+      // 🔹 3. Parse JSON safely
+      let result;
+      try {
+        result = await response.json();
+      } catch (err) {
+        throw new Error("ML API returned invalid JSON");
+      }
+
+      // 🔹 4. Convert base64 to blob
       const byteCharacters = atob(result.result_image);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -44,23 +55,21 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const byteArray = new Uint8Array(byteNumbers);
       const processedFile = new Blob([byteArray], { type: "image/jpeg" });
 
-      // 🔹 3. Upload to Supabase storage
+      // 🔹 5. Upload to Supabase storage
       const { error: uploadError } = await supabase.storage
         .from("ml-server")
         .upload(`uploaded_works/${fileName}`, processedFile, {
           cacheControl: "3600",
           upsert: true,
         });
-
       if (uploadError) throw uploadError;
 
       const { data: publicData } = supabase.storage
         .from("ml-server")
         .getPublicUrl(`uploaded_works/${fileName}`);
-
       const fileURL = publicData.publicUrl;
 
-      // 🔹 4. Save record in DB
+      // 🔹 6. Save record in DB
       const { error: dbError } = await supabase
         .from("student_work")
         .insert([
@@ -71,32 +80,27 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
             activity_title: activityTitle,
           },
         ]);
-
       if (dbError) throw dbError;
 
-      // 🟢 NEW: Log teacher activity
+      // 🔹 7. Log teacher activity
       try {
         const teacherUsername = localStorage.getItem("username");
-
-        // Get teacher ID from users table
         const { data: teacherData, error: teacherError } = await supabase
           .from("users")
           .select("id")
           .eq("username", teacherUsername)
           .single();
 
-        if (teacherError || !teacherData)
-          throw teacherError || new Error("Teacher not found");
+        if (teacherError || !teacherData) throw teacherError || new Error("Teacher not found");
 
-        // Insert into user_activity table
         const { error: activityError } = await supabase.from("user_activity").insert([
           {
             user_id: teacherData.id,
             user_action: `Uploaded new work "${activityTitle}" for student "${student.last_name}, ${student.first_name}"`,
           },
         ]);
-
         if (activityError) throw activityError;
+
         console.log("✅ Teacher activity logged successfully");
       } catch (logError) {
         console.error("Failed to log teacher activity:", logError.message);
