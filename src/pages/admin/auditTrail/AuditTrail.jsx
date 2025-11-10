@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminNavbar from "../../../components/AdminNavbar";
-import "./auditTrail.css";
+import "./AuditTrail.css";
 import { supabase } from "../../../supabaseClient";
 import useAdminSession from "../useAdminSession"; // ✅ Correct import path
 
