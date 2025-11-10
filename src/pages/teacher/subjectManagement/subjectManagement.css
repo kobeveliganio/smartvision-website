@@ -1,0 +1,246 @@
+.subject-container {
+  padding-top: 100px; /* adjust this to match navbar height */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  min-height: calc(100vh - 100px); /* full height minus navbar */
+  background-color: #f8fafc;
+  width: 100vw; /* light background */
+}
+
+.class-select{
+  padding: 10px;
+}
+
+.inner {
+  height: 80vh;
+}
+
+.content-wrapper{
+  display: flex;
+  height: 65vh;
+}
+
+.up-btn{
+  background-color: #303481;
+  color: #D6E6F2;
+}
+
+.up-btn{
+  background-color: #303481;
+  color: #D6E6F2;
+}
+
+.upload-material{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Upload file input styling */
+.upload-material input[type="file"] {
+  display: none; /* hide the default input */
+}
+
+.upload-material label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  border: 2px dashed #d1d5db;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #374151;
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+  width: 220px;
+}
+
+.upload-material label:hover {
+  background-color: #e5e7eb;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+}
+
+.upload-material .file-name {
+  margin-left: 1rem;
+  font-style: italic;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Optional: add an icon to label */
+.upload-material label::before {
+  content: "📁 ";
+}
+
+
+
+.class-name {
+  margin-left: 5px;
+  font-size: large;
+}
+
+.add-category {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.add-category input,
+.add-category textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.add-category button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.content-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.category-list {
+  flex: 1;
+  background: #D6E6F2;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.category-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.category-list li {
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  background: #f3f4f6;
+  transition: 0.2s;
+}
+
+.category-list li.active {
+  background: #4f46e5;
+  color: white;
+}
+
+.materials-section {
+  flex: 2;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: #D6E6F2;
+  color: #303481;
+}
+
+.upload-material {
+  margin-bottom: 15px;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.material-card {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.material-thumb {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.download-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #4f46e5;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-buttons button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-buttons button.cancel {
+  background: #ccc;
+}
+
+.open-modal-btn {
+  margin-left: 1rem;
+  padding: 0.5rem 0.9rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.open-modal-btn:hover {
+  background: #0066d1;
+}

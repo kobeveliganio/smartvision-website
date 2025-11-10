@@ -1,0 +1,218 @@
+/* ===== Base ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #F5F5F5;
+  color: #303481;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.hero .container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+
+/* ===== Navbar ===== */
+.smart-nav {
+  background-color: rgba(48, 52, 129, 0.95);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  padding: 0.7rem 0;
+}
+.smart-nav.scrolled {
+  background-color: rgba(48,52,129,0.9);
+  padding: 0.4rem 0;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.25);
+}
+.navbar-logo {
+  height: 40px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+.navbar-logo:hover { transform: scale(1.05); }
+
+.navbar-nav .nav-link {
+  color: #D6E6F2 !important;
+  position: relative;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+.navbar-nav .nav-link:hover {
+  color: #FFF200 !important;
+  transform: translateY(-1px);
+}
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #FFF200;
+  transition: width 0.3s ease;
+}
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active-link::after {
+  width: 100%;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  color: white;
+}
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  animation: zoomBg 20s ease-in-out infinite alternate;
+}
+@keyframes zoomBg {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(48,52,129,0.85), rgba(125,125,134,0.85));
+  z-index: 2;
+}
+.hero .container {
+  position: relative;
+  z-index: 3;
+  animation: fadeInUp 1.2s ease;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-title {
+  font-weight: 700;
+  margin-top: 100px;
+}
+
+
+.text-primary-part { color: #f5f5f5; }
+.text-highlight-part { color: #fdd346fd; }
+
+.btn-warning {
+  background-color: #e2bc3c;
+  border: none;
+  color: #303481;
+  transition: all 0.3s ease;
+  margin-top: 55px;
+  width: 250px;
+  height: 90px;
+  border-radius: 50px;
+  font-weight: 600;
+}
+.btn-warning:hover {
+  background-color: #e6cf00ff;
+  transform: scale(1.05);
+}
+
+.btn-warning1 {
+  background-color: #e2bc3c;
+  border: none;
+  color: #303481;
+  transition: all 0.3s ease;
+}
+.btn-warning1:hover {
+  background-color: #e6cf00ff;
+  transform: scale(1.05);
+}
+.btn-primary {
+    background-color: #e2bc3c;
+  border: none;
+  color: #303481;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+      background-color: #e6cf00ff;
+  transform: scale(1.05);
+}
+
+/* ===== Modal ===== */
+.modal-dialog { max-width: 480px; }
+.modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(48, 52, 129, 0.3);
+  padding: 2.5rem;
+  position: relative;
+  animation: modalPop 0.4s ease;
+}
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ===== Modal Close Button Fix ===== */
+.btn-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0.8;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+.btn-close:hover {
+  opacity: 1;
+  color: #e6da00;
+  transform: scale(1.1);
+}
+
+/* ===== Sections ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  height: 100%;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(48,52,129,0.25);
+}
+
+/* ===== Footer ===== */
+footer {
+  background-color: #303481;
+  color: #D6E6F2;
+  padding: 1rem 0;
+}
+footer span { color: #FFF200; }

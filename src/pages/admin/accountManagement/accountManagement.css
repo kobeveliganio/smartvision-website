@@ -1,0 +1,457 @@
+.contentArea {
+  padding: 35px;
+  min-height: 100vh;
+  margin-left: 250px; /* same as sidebar width */
+  width: calc(100vw - 250px);
+}
+
+.contentArea2 {
+  padding: 35px;
+  min-height: 100vh;
+  margin-left: 250px; /* same as sidebar width */
+  width: calc(100vw - 250px);
+  
+}
+
+/* Fade-in + slide-up animation for students table */
+.students-table1 {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+
+.students-table1.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.students-table1 {
+  border-collapse: collapse;
+  margin-top: 20px;
+  display: block; /* allows scrolling */
+  max-height: 500px; /* adjust height as needed */
+  overflow-y: auto; /* enables vertical scroll */
+
+  /* Hide scrollbar for Firefox */
+  scrollbar-width: none;
+  /* Hide scrollbar for IE, Edge */
+  -ms-overflow-style: none;
+}
+
+/* Hide scrollbar for Chrome, Safari, Opera */
+.students-table1::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Fix table header when scrolling vertically */
+.students-table1 thead {
+  position: sticky;
+  top: 0;
+  background: #f8f8f8;
+  z-index: 2;
+}
+
+
+/* Optional hover effect */
+.students-table1 tr:hover {
+  background-color: #f2f2f2;
+}
+
+/* Add this at the end of your CSS or wherever appropriate */
+
+/* Initial state for table */
+.users-table {
+  opacity: 0;
+  transform: translateY(20px); /* slight downward movement */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+/* When table is "loaded", fade in */
+.users-table.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Modal overlay */
+.edit-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.edit-modal-overlay.show {
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal content */
+.edit-modal-content {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #303481;
+}
+
+.save-btn {
+  background-color: black;
+}
+
+.edit-modal-overlay.show .edit-modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Modal inputs */
+.edit-modal-content input,
+.edit-modal-content select {
+  width: 100%;
+  padding: 8px 10px;
+  margin: 8px 0 15px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Modal buttons */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.save-btn {
+  background-color: #FFF200;
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-buttons .save-btn-users{
+  background-color: #0056b3;
+  color: black;
+}
+
+.save-btn:hover {
+  background-color: #218838;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-btn:hover {
+  background-color: #c82333;
+}
+
+/* Import Modal Overlay */
+.student-import-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.student-import-modal-overlay.show {
+  background-color: rgba(0,0,0,0.5);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Import Modal Content */
+.student-import-modal-content {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.student-import-modal-overlay.show .student-import-modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Modal Buttons */
+.student-import-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.student-save-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.student-save-btn:hover {
+  background-color: #218838;
+}
+
+.student-cancel-btn {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.student-cancel-btn:hover {
+  background-color: #c82333;
+}
+
+
+
+/* Table styling shared by both pages */
+.users-table,
+.students-table1 {
+  border-collapse: collapse;
+  background: white;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th,
+td {
+  text-align: left;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.import {
+  background-color: #D6E6F2;
+}
+
+.options {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.editButton {
+  background-color: #FFF200;
+}
+.deleteButton {
+  background-color: red;
+}
+
+th {
+  background-color: #e0e0e0;
+}
+
+/* Optional: Hover effect for rows */
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+
+/*design for popup modal edit success*/
+/* Feedback modal overlay */
+.feedback-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2000;
+}
+
+.feedback-modal-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.feedback-modal-content {
+  background-color: #fff;
+  padding: 25px 35px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  animation: popIn 0.3s ease;
+}
+
+.feedback-modal-content.success {
+  border: 6px solid #4caf50;
+}
+
+.feedback-modal-content.error {
+  border-left: 6px solid #f44336;
+}
+
+.feedback-modal-btn {
+  margin-top: 15px;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.feedback-modal-content button:hover {
+  background-color: #0056b3;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/*css for the edit modal of student*/
+
+/* Unique student edit modal */
+.student-edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+
+.student-edit-modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.student-edit-modal-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: slideDown 0.3s ease;
+
+  /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.student-edit-modal-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+
+.student-edit-modal-content h3 {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.student-edit-modal-content label {
+  display: block;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.student-edit-modal-content input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.student-edit-modal-content .modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.student-edit-modal-content .save-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.student-edit-modal-content .cancel-btn {
+  background: #ccc;
+  color: #333;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-15px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.student-edit-modal-content select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-top: 5px;
+}

@@ -1,0 +1,168 @@
+.admin-dashboard {
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f8ff;
+  min-height: 100vh;
+  margin-left: 250px; /* same as sidebar width */
+  width: calc(100vw - 250px); /* subtract sidebar width */
+  padding: 35px;
+  height: 100vh;
+}
+
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+}
+
+.dashboard-subtitle {
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap; /* allows items to move to next row */
+  gap: 1.5rem; /* spacing between items */
+  overflow: hidden; /* hide extra items if needed */
+  width: 100%;
+}
+
+.stats-grid > div {
+  flex: 0 0 calc(33.333% - 1rem); /* 3 items per row, adjust for gap */
+  height: 120px; /* same as your grid row height */
+  box-sizing: border-box; /* include padding/border in width */
+}
+
+
+.stat-card {
+  width: 100%;       /* fill the grid column */
+  height: 100%;      /* optional, for consistent height */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  border-radius: 0.5rem;
+}
+
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h2 {
+  font-size: 2rem;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+  color: #555;
+  font-weight: 500;
+}
+
+.recent-section {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.recent-section h3 {
+  font-size: 1.3rem;
+  color: #1e3a8a;
+  margin-bottom: 0.8rem;
+}
+
+.placeholder-text {
+  color: #777;
+  font-style: italic;
+}
+
+.admin-dashboard {
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  color: #4a90e2;
+}
+
+.stat-card.teachers .stat-icon { color: #f39c12; }
+.stat-card.students .stat-icon { color: #27ae60; }
+.stat-card.files .stat-icon { color: #8e44ad; }
+.stat-card.classrooms .stat-icon { color: #2980b9; }
+
+.stat-card h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #555;
+}
+
+.recent-section {
+  margin-top: 2rem;
+}
+
+.recent-section h3 {
+  margin-bottom: 1rem;
+}
+
+.recent-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.recent-table th, .recent-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.recent-table th {
+  background-color: #f7f7f7;
+  font-weight: 600;
+}

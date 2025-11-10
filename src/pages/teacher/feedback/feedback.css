@@ -1,0 +1,548 @@
+/* Container for the whole page */
+.feedback-container {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 80px);
+  padding: 2rem;
+  padding-top: 80px; /* adjust for navbar height */
+  box-sizing: border-box;
+}
+
+/* Inner flex container for side-by-side tables */
+.inner-con {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap; /* wrap on small screens */
+}
+
+/* Both sections have equal width and similar styling */
+.student-work-list,
+.feedback-table {
+  flex: 1 1 48%;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Table styling */
+.student-table,
+.feedback-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.student-table th,
+.student-table td,
+.feedback-table th,
+.feedback-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.student-table th,
+.feedback-table th {
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+}
+
+.student-table tr:hover,
+.feedback-table tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* Buttons */
+.give-feedback-btn,
+.view-output-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  background-color: #FFF200;
+}
+
+.give-feedback-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.give-feedback-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.view-output-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.view-output-btn:hover {
+  background-color: #1e40af;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.close-modal-btn {
+  background-color: #ef4444;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.close-modal-btn:hover {
+  background-color: #b91c1c;
+}
+
+/* Inputs */
+textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  resize: none;
+}
+
+.score-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.score-inputs input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+/* Audio section */
+.audio-section {
+  margin-bottom: 15px;
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.record-btn {
+  background-color: #10b981;
+  color: white;
+  width: 100%;
+}
+
+.record-btn:hover {
+  background-color: #059669;
+}
+
+.stop-btn {
+  background-color: #ef4444;
+  color: white;
+}
+
+.stop-btn:hover {
+  background-color: #b91c1c;
+}
+
+.record-timer {
+  font-size: 0.9rem;
+  color: #6b7280;
+  min-width: 35px;
+  text-align: center;
+}
+
+/* Feedback modal buttons */
+.submit-feedback-btn {
+  background-color: #22c55e;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submit-feedback-btn:hover {
+  background-color: #16a34a;
+}
+
+.cancel-modal-btn {
+  background-color: #6b7280;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-modal-btn:hover {
+  background-color: #4b5563;
+}
+
+/* Output image */
+.student-output-image {
+  max-width: 100%;
+  max-height: 400px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive for small screens */
+@media (max-width: 1024px) {
+  .inner-con {
+    flex-direction: column;
+  }
+
+  .student-work-list,
+  .feedback-table {
+    flex: 1 1 100%;
+  }
+}
+
+/* Inner flex container for side-by-side tables */
+.inner-con {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  flex-wrap: wrap; /* wrap on small screens */
+}
+
+/* Student work list */
+.student-work-list {
+  flex: 1 1 48%;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  max-height: 60vh; /* make this shorter */
+  overflow-y: auto; /* scroll only this table if needed */
+}
+
+/* Feedback table */
+.feedback-table {
+  flex: 1 1 48%;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  max-height: none; /* allow full height, no scroll */
+  overflow: visible;
+}
+
+/* Tables inside both sections */
+.student-table,
+.feedback-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.student-table th,
+.student-table td,
+.feedback-table th,
+.feedback-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.student-table th,
+.feedback-table th {
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+}
+
+.student-table tr:hover,
+.feedback-table tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .inner-con {
+    flex-direction: column;
+  }
+
+  .student-work-list,
+  .feedback-table {
+    flex: 1 1 100%;
+    max-height: none; /* remove scroll on small screens */
+  }
+}
+
+
+.modal-head-2 {
+  display: flex;
+  justify-content: space-between; /* title left, button right */
+  align-items: center; /* vertical center */
+
+  height: 60px; /* optional: set a fixed height */
+  box-sizing: border-box;
+}
+
+.modal-header {
+  margin: 0; /* remove position: relative and right */
+  font-size: 2.5rem;
+}
+
+.close-modal-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #ef4444;
+  color: white;
+  cursor: pointer;
+  /* remove position: relative, top, etc. */
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal content */
+.modal-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px 30px;
+  width: 450px;
+  max-width: 90%;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Modal header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction:row;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  flex: 1; /* allows h3 to expand */
+}
+
+.close-modal-btn {
+  background: #f44336;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Textarea */
+textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+/* Audio section */
+.audio-section, .upload-audio, .score-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.audio-controls button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.record-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.stop-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.record-timer {
+  font-size: 0.9rem;
+}
+
+/* Upload input */
+.upload-audio input[type="file"] {
+  margin-top: 5px;
+}
+
+/* Score inputs aligned horizontally */
+.score-inputs {
+  flex-direction: row;
+  gap: 10px;
+}
+
+.score-inputs input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Modal actions */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.submit-feedback-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-modal-btn {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-record{
+  width: 100%;
+}
+
+.start{
+  background-color: #D6E6F2;
+  color: black;
+}
+
+.stop {
+  background-color: #FFF200 ;
+}
+
+.sub {
+  background-color: #303481 ;
+  color: white;
+}
+
+.can{
+  background-color: red;
+  color: white
+}
+
+
+.popup-modal {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #323232;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  z-index: 9999;
+  animation: fadein 0.3s, fadeout 0.3s 2.7s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeout {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}

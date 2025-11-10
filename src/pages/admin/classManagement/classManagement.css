@@ -1,0 +1,423 @@
+/* Offset for the fixed navbar */
+.classroom-page {
+  margin-left: 250px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px; /* same as sidebar width */
+  width: calc(100vw - 250px);
+}
+
+.roomTitle{
+  font-size: 25px;
+}
+
+/* Two-column layout */
+.classroom-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 2.5fr;
+  margin-top: 20px;
+
+  padding: 10px;
+  height: 85vh;
+}
+
+.edit-class-btn {
+  color: #303481;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+  background-color: orange;
+}
+
+.edit-class-btn:hover {
+  background-color: #D6E6F2;
+}
+
+/* Left side (scrollable card list) */
+.classroom-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 20px;
+  width: 350px;
+}
+
+/* Scrollbar styling for cards */
+.classroom-container::-webkit-scrollbar {
+  width: 8px;
+}
+.classroom-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+/* Slide-in animation for classroom cards */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply the animation to the container and its children */
+.classroom-container {
+  animation: slideIn 0.6s ease-out;
+}
+
+.classroom-container > * {
+  animation: slideIn 0.6s ease-out;
+  animation-fill-mode: both;
+  /* Optional slight delay for cascading effect */
+  animation-delay: calc(var(--i, 0) * 0.1s);
+}
+
+
+/* Card styles */
+.classroom-card {
+  background-color: #D6E6F2;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.classroom-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Button */
+.view-btn {
+  background-color: #303481;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.view-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Right side (details panel) */
+.classroom-details {
+  margin-top: 20px;
+  padding: 25px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.classroom-details h3 {
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.classroom-details p {
+  margin: 4px 0;
+  color: #333;
+}
+
+.students-section {
+  margin-top: 20px;
+}
+
+.students-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.add-student-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.add-student-btn:hover {
+  background-color: #218838;
+}
+
+.table-wrapper {
+  border: solid black 2px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 420px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.edit-classroom-form label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.edit-classroom-form input,
+.edit-classroom-form select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 4px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.save-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Overlay */
+.assign-students-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Modal */
+.assign-students-modal {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.assign-students-modal label, select {
+  padding: 10px;
+}
+
+.assign-students-modal input {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Title & Subtitle */
+.assign-students-title {
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.assign-students-subtitle {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Table */
+.assign-students-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.assign-students-thead th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+
+.assign-students-tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+.assign-students-td {
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+/* Checkbox */
+.assign-students-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Empty state */
+.assign-students-empty {
+  text-align: center;
+  font-style: italic;
+  color: #999;
+  margin-top: 20px;
+}
+
+/* Buttons container */
+.assign-students-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+/* Save button */
+.assign-students-save-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.assign-students-save-btn:hover {
+  background-color: #218838;
+}
+
+/* Cancel button */
+.assign-students-cancel-btn {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.assign-students-cancel-btn:hover {
+  background-color: #c82333;
+}
+
+/* Modal animation */
+@keyframes slideDown {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.classroom-details {
+  margin-top: 20px;
+  padding: 25px;
+  background-color: #f8f9fa; /* light gray-white */
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000; /* ensure text is readable */
+}
+
+.classroom-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+   width: 98%;
+}
+
+/* optional polish for the button */
+.add-class-btn {
+  background-color: #ffd400;
+  border: none;
+  color: #333;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-class-btn:hover {
+  background-color: #ffcc00;
+  transform: translateY(-2px);
+}
+
+.classroom-details {
+  animation: slideUp 0.6s ease forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.students-tables {
+  width: 100%;
+}

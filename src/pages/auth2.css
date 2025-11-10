@@ -1,0 +1,267 @@
+
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main Layout */
+.login2-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: #D6E6F2;
+  font-family: "Poppins", sans-serif;
+}
+
+/* LEFT SIDE (Background + Overlay) */
+.left2-div {
+  width: 50%;
+  background: url("../assets/bg2.jpg") center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  position: relative;
+}
+
+.right2-overlay {
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  padding: 3rem;
+  text-align: center;
+  border-radius: 12px;
+  max-width: 80%;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.right2-overlay h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.right2-overlay p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+/* RIGHT SIDE (Form Section) */
+.right2-div {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fbff;
+}
+
+/* Signup Card */
+.login2-card {
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease-in-out;
+  animation: slideUp 0.7s ease;
+}
+
+.login2-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Branding */
+.brand2-section {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.brand2-logo {
+  width: 200px;
+  margin-bottom: 0.5rem;
+}
+
+.brand2-subtitle {
+  color: #777;
+  font-size: 0.95rem;
+}
+
+/* Form */
+.login2-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form2-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #444;
+  font-weight: 600;
+}
+
+.form2-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+}
+
+.form2-group label {
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.form2-group input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.form2-group input:focus {
+  border-color: #0077b6;
+  box-shadow: 0 0 0 2px rgba(0, 119, 182, 0.2);
+}
+
+/* Buttons */
+.btn2-login {
+  background-color: #0077b6;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn2-login:hover {
+  background-color: #005f8c;
+}
+
+/* Error */
+.error2-text {
+  color: #d9534f;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Login Redirect */
+.signup2-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.link2-signup {
+  color: #0077b6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link2-signup:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .login2-container {
+    flex-direction: column;
+  }
+
+  .left2-div,
+  .right2-div {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .right2-overlay {
+    max-width: 90%;
+  }
+}
+
+/* Fade transition for smooth page swap */
+.auth-fade {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.auth-fade.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 15px;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+.modal-content h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.modal-content p {
+  color: #666;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+

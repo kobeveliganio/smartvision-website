@@ -1,0 +1,62 @@
+.teacher-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #303481; /* dark-blue */
+  padding: 1rem 2rem;
+  color: white;
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100vw;
+}
+.navbarlogo{
+  width: 200px;
+}
+
+.navbar-left h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.navbar-user {
+  margin-left: 1rem;
+  font-size: 1rem;
+}
+
+.navbar-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: #FFF200;
+  color: #303481;
+}
+
+.nav-link.active {
+  background-color: #D6E6F2; /* blue for active */
+  color: #303481;
+}
+
+.btn-logout {
+  background-color: #ef4444; /* red */
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  background-color: #dc2626;
+}

@@ -1,0 +1,109 @@
+/* File: src/pages/teacher/TeacherDashboard.css */
+
+/* Adjust main dashboard container to avoid overlapping fixed navbar */
+.teacher-dashboard {
+  padding-top: 80px; /* adjust this to match navbar height */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  min-height: calc(100vh - 80px); /* full height minus navbar */
+  background-color: #f8fafc;
+  width: 100vw; /* light background */
+}
+
+/* Dashboard title & subtitle */
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  color: #1e293b;
+}
+
+.dashboard-subtitle {
+  font-size: 1rem;
+  color: #475569;
+  margin-bottom: 2rem;
+}
+
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 200px;
+  background-color: #D6E6F2;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  color: #303481; /* blue icon */
+}
+
+.stat-card h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #1e293b;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #64748b;
+}
+
+/* Classrooms Section */
+.teacher-classes {
+  margin-top: 2rem;
+}
+
+.teacher-classes h2 {
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+/* Grid of classroom cards */
+.classes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Individual class card */
+.class-card {
+  background-color: #D6E6F2;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.class-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 10px rgba(0,0,0,0.12);
+}
+
+.class-card h3 {
+  margin: 0 0 0.5rem 0;
+  color: #1e293b;
+}
+
+.class-card p {
+  margin: 0;
+  color: #475569;
+  font-size: 0.9rem;
+}
