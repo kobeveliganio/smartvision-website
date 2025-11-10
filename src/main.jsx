@@ -13,7 +13,7 @@ import Students from "./pages/admin/accountManagement/Students.jsx";
 import Classrooms from "./pages/admin/classManagement/Classrooms.jsx";
 import AssignStudents from "./pages/admin/classManagement/AssignStudents.jsx";
 import AuditTrail from "./pages/admin/auditTrail/AuditTrail.jsx";
-import MaterialsManagement from "./pages/admin/materialsManagement/MaterialsManagement.jsx"; // ✅ New page
+import MaterialsManagement from "./pages/admin/materialsManagement/materialsManagement.jsx"; // ✅ New page
 import Feedbacks from "./pages/admin/feedbacks/Feedbacks.jsx"; // Optional for future admin feedback view
 
 // Teacher Pages
