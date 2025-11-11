@@ -42,14 +42,16 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       console.log("ML API result:", result);
 
       // 2️⃣ Fetch the annotated image saved on server
-      if (!result.annotated_image_path) {
-        throw new Error("ML API did not return annotated image path");
-      }
+      // 2️⃣ Fetch the annotated image from public URL provided by ML API
+if (!result.annotated_image_url) {
+  throw new Error("ML API did not return annotated image URL");
+}
 
-      const annotatedResponse = await fetch(`${new URL(result.annotated_image_path, ML_API_URL).origin}/${result.annotated_image_path}`);
-      if (!annotatedResponse.ok) throw new Error("Failed to fetch annotated image from server");
+const annotatedResponse = await fetch(result.annotated_image_url);
+if (!annotatedResponse.ok) throw new Error("Failed to fetch annotated image from Supabase");
 
-      const annotatedBlob = await annotatedResponse.blob();
+const annotatedBlob = await annotatedResponse.blob();
+
 
       // 3️⃣ Upload to Supabase storage
       const { error: uploadError } = await supabase.storage
