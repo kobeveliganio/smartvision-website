@@ -19,13 +19,21 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
     try {
       const fileExt = file.name.split(".").pop();
       const fileName = `${student.student_id}_${Date.now()}.${fileExt}`;
+      console.log("📤 Starting upload for file:", file.name);
 
       // 1️⃣ Send file to ML API using environment variables
       const formData = new FormData();
       formData.append("file", file);
 
-      const ML_API_URL = process.env.REACT_APP_ML_API_URL; // from .env
-      const ML_API_KEY = process.env.REACT_APP_ML_API_KEY; // optional, if your API validates
+      const ML_API_URL = process.env.REACT_APP_ML_API_URL;
+      const ML_API_KEY = process.env.REACT_APP_ML_API_KEY;
+
+      // ✅ Console log to check API URL
+      console.log("🌐 ML API URL:", ML_API_URL);
+
+      if (!ML_API_URL) {
+        throw new Error("ML API URL is not defined in .env file!");
+      }
 
       const response = await fetch(ML_API_URL, {
         method: "POST",
@@ -33,19 +41,22 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         body: formData,
       });
 
+      console.log("📡 ML API response status:", response.status);
+
       if (!response.ok) {
         const text = await response.text();
         throw new Error(`ML API failed: ${response.status} ${text}`);
       }
 
       const result = await response.json();
-      console.log("ML API result:", result);
+      console.log("✅ ML API result:", result);
 
       // 2️⃣ Convert ML API base64 image to Blob
       if (!result.annotated_image_base64) {
         throw new Error("ML API did not return annotated image base64");
       }
 
+      console.log("🔄 Converting base64 image to Blob...");
       const byteCharacters = atob(result.annotated_image_base64);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -53,8 +64,10 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       }
       const byteArray = new Uint8Array(byteNumbers);
       const annotatedBlob = new Blob([byteArray], { type: "image/jpeg" });
+      console.log("🖼️ Annotated Blob created:", annotatedBlob);
 
       // 3️⃣ Upload annotated image Blob to Supabase storage
+      console.log("☁️ Uploading annotated image to Supabase...");
       const { error: uploadError } = await supabase.storage
         .from("ml-server")
         .upload(`uploaded_works/${fileName}`, annotatedBlob, {
@@ -68,6 +81,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         .from("ml-server")
         .getPublicUrl(`uploaded_works/${fileName}`);
       const fileURL = publicData.publicUrl;
+      console.log("🌐 File uploaded to Supabase, public URL:", fileURL);
 
       // 5️⃣ Save record in DB
       const { error: dbError } = await supabase
@@ -81,6 +95,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
           },
         ]);
       if (dbError) throw dbError;
+      console.log("💾 Student work saved in database.");
 
       // 6️⃣ Log teacher activity
       try {
@@ -101,9 +116,9 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         ]);
         if (activityError) throw activityError;
 
-        console.log("✅ Teacher activity logged successfully");
+        console.log("📝 Teacher activity logged successfully");
       } catch (logError) {
-        console.error("Failed to log teacher activity:", logError.message);
+        console.error("❌ Failed to log teacher activity:", logError.message);
       }
 
       alert("✅ File processed and uploaded successfully!");
@@ -112,7 +127,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       onUploadComplete();
       onClose();
     } catch (err) {
-      console.error("Error uploading file:", err.message);
+      console.error("❌ Error uploading file:", err.message);
       alert(`Upload failed: ${err.message}`);
     } finally {
       setUploading(false);
