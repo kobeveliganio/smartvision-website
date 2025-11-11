@@ -31,6 +31,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         },
         body: formData,
       });
+      console.log("API URL: " , process.env.REACT_APP_ML_API_URL);
 
       // 🔹 2. Check if response is ok
       if (!response.ok) {
