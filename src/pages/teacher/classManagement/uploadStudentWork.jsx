@@ -20,7 +20,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const fileExt = file.name.split(".").pop();
       const fileName = `${student.student_id}_${Date.now()}.${fileExt}`;
 
-      // 1️⃣ Send file to ML API using environment variable
+      // 1️⃣ Send file to ML API using environment variables
       const formData = new FormData();
       formData.append("file", file);
 
@@ -41,19 +41,20 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const result = await response.json();
       console.log("ML API result:", result);
 
-      // 2️⃣ Fetch the annotated image saved on server
-      // 2️⃣ Fetch the annotated image from public URL provided by ML API
-if (!result.annotated_image_url) {
-  throw new Error("ML API did not return annotated image URL");
-}
+      // 2️⃣ Convert ML API base64 image to Blob
+      if (!result.annotated_image_base64) {
+        throw new Error("ML API did not return annotated image base64");
+      }
 
-const annotatedResponse = await fetch(result.annotated_image_url);
-if (!annotatedResponse.ok) throw new Error("Failed to fetch annotated image from Supabase");
+      const byteCharacters = atob(result.annotated_image_base64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const annotatedBlob = new Blob([byteArray], { type: "image/jpeg" });
 
-const annotatedBlob = await annotatedResponse.blob();
-
-
-      // 3️⃣ Upload to Supabase storage
+      // 3️⃣ Upload annotated image Blob to Supabase storage
       const { error: uploadError } = await supabase.storage
         .from("ml-server")
         .upload(`uploaded_works/${fileName}`, annotatedBlob, {
