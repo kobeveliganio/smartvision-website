@@ -20,57 +20,53 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const fileExt = file.name.split(".").pop();
       const fileName = `${student.student_id}_${Date.now()}.${fileExt}`;
 
-      // 🔹 1. Send to YOLO API
+      // 1️⃣ Send file to ML API using environment variable
       const formData = new FormData();
-      formData.append("image", file);
+      formData.append("file", file);
 
-      const response = await fetch(process.env.REACT_APP_ML_API_URL, {
+      const ML_API_URL = process.env.REACT_APP_ML_API_URL; // from .env
+      const ML_API_KEY = process.env.REACT_APP_ML_API_KEY; // optional, if your API validates
+
+      const response = await fetch(ML_API_URL, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_ML_API_KEY}`,
-        },
+        headers: ML_API_KEY ? { Authorization: `Bearer ${ML_API_KEY}` } : {},
         body: formData,
       });
-      console.log("API URL: " , process.env.REACT_APP_ML_API_URL);
 
-      // 🔹 2. Check if response is ok
       if (!response.ok) {
         const text = await response.text();
         throw new Error(`ML API failed: ${response.status} ${text}`);
       }
 
-      // 🔹 3. Parse JSON safely
-      let result;
-      try {
-        result = await response.json();
-      } catch (err) {
-        throw new Error("ML API returned invalid JSON");
+      const result = await response.json();
+      console.log("ML API result:", result);
+
+      // 2️⃣ Fetch the annotated image saved on server
+      if (!result.annotated_image_path) {
+        throw new Error("ML API did not return annotated image path");
       }
 
-      // 🔹 4. Convert base64 to blob
-      const byteCharacters = atob(result.result_image);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const processedFile = new Blob([byteArray], { type: "image/jpeg" });
+      const annotatedResponse = await fetch(`${new URL(result.annotated_image_path, ML_API_URL).origin}/${result.annotated_image_path}`);
+      if (!annotatedResponse.ok) throw new Error("Failed to fetch annotated image from server");
 
-      // 🔹 5. Upload to Supabase storage
+      const annotatedBlob = await annotatedResponse.blob();
+
+      // 3️⃣ Upload to Supabase storage
       const { error: uploadError } = await supabase.storage
         .from("ml-server")
-        .upload(`uploaded_works/${fileName}`, processedFile, {
+        .upload(`uploaded_works/${fileName}`, annotatedBlob, {
           cacheControl: "3600",
           upsert: true,
         });
       if (uploadError) throw uploadError;
 
+      // 4️⃣ Get public URL
       const { data: publicData } = supabase.storage
         .from("ml-server")
         .getPublicUrl(`uploaded_works/${fileName}`);
       const fileURL = publicData.publicUrl;
 
-      // 🔹 6. Save record in DB
+      // 5️⃣ Save record in DB
       const { error: dbError } = await supabase
         .from("student_work")
         .insert([
@@ -83,7 +79,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         ]);
       if (dbError) throw dbError;
 
-      // 🔹 7. Log teacher activity
+      // 6️⃣ Log teacher activity
       try {
         const teacherUsername = localStorage.getItem("username");
         const { data: teacherData, error: teacherError } = await supabase
