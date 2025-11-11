@@ -25,8 +25,8 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const formData = new FormData();
       formData.append("file", file);
 
-      const ML_API_URL = process.env.REACT_APP_ML_API_URL;
-      const ML_API_KEY = process.env.REACT_APP_ML_API_KEY;
+      const ML_API_URL = "https://braille-ml-api.onrender.com/predict";
+      const ML_API_KEY = "my-secret-key-123";
 
       // ✅ Console log to check API URL
       console.log("🌐 ML API URL:", ML_API_URL);
