@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: smart-vision-full
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      npm install
+      npm run build
+    startCommand: "gunicorn app:app -b 0.0.0.0:$PORT"
+    plan: free

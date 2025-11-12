@@ -22,24 +22,18 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const fileName = `${student.student_id}_${Date.now()}.${fileExt}`;
       console.log("📤 Starting upload for file:", file.name);
 
-      const ML_API_URL = "https://braille-ml-api.onrender.com/predict"; // deployed ML API
-      const ML_API_KEY = "my-secret-key-123";
+      // Use relative path to Flask backend
+      const ML_API_URL = "/predict";
 
-      // Use FormData (browser handles boundaries automatically)
       const formData = new FormData();
       formData.append("file", file);
 
-      console.log("🌐 Sending request to:", ML_API_URL);
+      console.log("🌐 Sending request to ML API...");
 
       const response = await fetch(ML_API_URL, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${ML_API_KEY}`, // custom header triggers CORS preflight
-        },
         body: formData,
       });
-
-      console.log("📡 ML API response status:", response.status);
 
       if (!response.ok) {
         const text = await response.text();
@@ -47,20 +41,14 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       }
 
       const result = await response.json();
-      console.log("✅ ML API result:", result);
-
       if (!result.annotated_image_base64) {
         throw new Error("ML API did not return annotated image base64");
       }
 
       // Convert base64 → Blob
       const byteCharacters = atob(result.annotated_image_base64);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const annotatedBlob = new Blob([byteArray], { type: "image/jpeg" });
+      const byteNumbers = Array.from(byteCharacters).map(c => c.charCodeAt(0));
+      const annotatedBlob = new Blob([new Uint8Array(byteNumbers)], { type: "image/jpeg" });
 
       // Upload to Supabase
       const { error: uploadError } = await supabase.storage
@@ -72,7 +60,6 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         .from("ml-server")
         .getPublicUrl(`uploaded_works/${fileName}`);
       const fileURL = publicData.publicUrl;
-      console.log("🌐 Uploaded file URL:", fileURL);
 
       // Save in DB
       const { error: dbError } = await supabase.from("student_work").insert([
@@ -84,8 +71,6 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         },
       ]);
       if (dbError) throw dbError;
-
-      console.log("💾 Student work saved in database.");
 
       // Log teacher activity
       try {
@@ -124,21 +109,22 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
   return (
     <div className="upload-modal-overlay" onClick={onClose}>
       <div className="upload-modal-content" onClick={(e) => e.stopPropagation()}>
-        <h3>
-          Upload Braille Work for <br /> {`${student.first_name} ${student.last_name}`}
-        </h3>
+        <h3>Upload Braille Work for <br /> {`${student.first_name} ${student.last_name}`}</h3>
         <label className="label">
           <p>Activity Title:</p>
-          <input type="text" value={activityTitle} onChange={(e) => setActivityTitle(e.target.value)} placeholder="Enter activity title" />
+          <input
+            type="text"
+            value={activityTitle}
+            onChange={(e) => setActivityTitle(e.target.value)}
+            placeholder="Enter activity title"
+          />
         </label>
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <div className="modal-buttons">
           <button onClick={handleUpload} disabled={uploading || !file}>
             {uploading ? "Processing..." : "Upload & Process"}
           </button>
-          <button onClick={onClose} disabled={uploading}>
-            Cancel
-          </button>
+          <button onClick={onClose} disabled={uploading}>Cancel</button>
         </div>
       </div>
     </div>
