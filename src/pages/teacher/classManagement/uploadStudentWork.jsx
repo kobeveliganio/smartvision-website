@@ -163,7 +163,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
   if (!session) return null;
 
   const handleUpload = async () => {
-    if (!file) return;
+    if (!file) return alert("Please select a file.");
     if (!activityTitle.trim()) return alert("Please enter an activity title.");
 
     setUploading(true);
@@ -172,29 +172,36 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const fileName = `${student.student_id}_${Date.now()}.${fileExt}`;
       console.log("📤 Starting upload for file:", file.name);
 
-      // 1️⃣ Send file to ML API using environment variables
-      const formData = new FormData();
-      formData.append("file", file);
-
       const ML_API_URL = "https://braille-ml-api.onrender.com/predict";
       const ML_API_KEY = "my-secret-key-123";
 
-      // ✅ Console log to check API URL
-      console.log("🌐 ML API URL:", ML_API_URL);
+      // ✅ Create manual multipart/form-data with boundary
+      const boundary = "----WebKitFormBoundary" + Math.random().toString(36).substring(7);
+      let header = `--${boundary}\r\n`;
+      header += `Content-Disposition: form-data; name="file"; filename="${file.name}"\r\n`;
+      header += `Content-Type: ${file.type || "application/octet-stream"}\r\n\r\n`;
 
-      if (!ML_API_URL) {
-        throw new Error("ML API URL is not defined in .env file!");
-      }
+      const fileBuffer = await file.arrayBuffer();
+      const uint8Array = new Uint8Array(fileBuffer);
+      const footer = `\r\n--${boundary}--\r\n`;
+
+      // Build full body
+      const encoder = new TextEncoder();
+      const fullBody = new Blob(
+        [encoder.encode(header), uint8Array, encoder.encode(footer)],
+        { type: `multipart/form-data; boundary=${boundary}` }
+      );
+
+      console.log("🌐 Sending request to:", ML_API_URL);
 
       const response = await fetch(ML_API_URL, {
         method: "POST",
         headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${ML_API_KEY}`
+          "Content-Type": `multipart/form-data; boundary=${boundary}`,
+          Authorization: `Bearer ${ML_API_KEY}`,
         },
-        body:formData,
+        body: fullBody,
       });
-
 
       console.log("📡 ML API response status:", response.status);
 
@@ -206,12 +213,12 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const result = await response.json();
       console.log("✅ ML API result:", result);
 
-      // 2️⃣ Convert ML API base64 image to Blob
       if (!result.annotated_image_base64) {
         throw new Error("ML API did not return annotated image base64");
       }
 
-      console.log("🔄 Converting base64 image to Blob...");
+      // Convert base64 → Blob
+      console.log("🔄 Converting base64 to Blob...");
       const byteCharacters = atob(result.annotated_image_base64);
       const byteNumbers = new Array(byteCharacters.length);
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -219,9 +226,8 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       }
       const byteArray = new Uint8Array(byteNumbers);
       const annotatedBlob = new Blob([byteArray], { type: "image/jpeg" });
-      console.log("🖼️ Annotated Blob created:", annotatedBlob);
 
-      // 3️⃣ Upload annotated image Blob to Supabase storage
+      // Upload annotated image to Supabase
       console.log("☁️ Uploading annotated image to Supabase...");
       const { error: uploadError } = await supabase.storage
         .from("ml-server")
@@ -231,14 +237,13 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         });
       if (uploadError) throw uploadError;
 
-      // 4️⃣ Get public URL
       const { data: publicData } = supabase.storage
         .from("ml-server")
         .getPublicUrl(`uploaded_works/${fileName}`);
       const fileURL = publicData.publicUrl;
-      console.log("🌐 File uploaded to Supabase, public URL:", fileURL);
+      console.log("🌐 Uploaded file URL:", fileURL);
 
-      // 5️⃣ Save record in DB
+      // Insert record into DB
       const { error: dbError } = await supabase
         .from("student_work")
         .insert([
@@ -250,9 +255,10 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
           },
         ]);
       if (dbError) throw dbError;
+
       console.log("💾 Student work saved in database.");
 
-      // 6️⃣ Log teacher activity
+      // Log teacher activity
       try {
         const teacherUsername = localStorage.getItem("username");
         const { data: teacherData, error: teacherError } = await supabase
