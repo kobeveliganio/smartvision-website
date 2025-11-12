@@ -19,9 +19,9 @@ def get_model():
     global model
     if model is None:
         try:
-            # Download model file from Supabase
             print("⬇️ Downloading YOLO model from Supabase...")
             response = requests.get(SUPABASE_MODEL_URL)
+            print("📦 Download status:", response.status_code)
             if response.status_code != 200:
                 raise Exception(f"Failed to download model: {response.status_code} {response.text}")
 
@@ -33,7 +33,10 @@ def get_model():
         except Exception as e:
             print("❌ Failed to load YOLO model:", e)
             model = None
+    else:
+        print("🔁 YOLO model already loaded.")
     return model
+
 
 ML_API_KEY = os.environ.get("ML_API_KEY", "my-secret-key-123")
 
