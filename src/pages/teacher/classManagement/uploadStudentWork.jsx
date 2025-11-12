@@ -189,10 +189,11 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const response = await fetch(ML_API_URL, {
         method: "POST",
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${ML_API_KEY}`
         },
         body:formData,
+        credentials:"include",
       });
 
 
