@@ -39,6 +39,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
         method: "POST",
         headers: ML_API_KEY ? { Authorization: `Bearer ${ML_API_KEY}` } : {},
         body: formData,
+        credentials: "include"
       });
 
       console.log("📡 ML API response status:", response.status);
