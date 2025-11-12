@@ -6,9 +6,15 @@ export default defineConfig({
   server: {
     port: 5173,
     cors: {
-      origin: "*", // allow all origins (dev only)
+      origin: "*",
       methods: ["GET", "POST", "OPTIONS"],
       allowedHeaders: ["Authorization", "Content-Type"],
+    },
+    proxy: {
+      '/predict': {
+        target: 'http://localhost:10000',
+        changeOrigin: true,
+      },
     },
   },
 });

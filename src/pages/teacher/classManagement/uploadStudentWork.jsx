@@ -23,7 +23,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       console.log("📤 Starting upload for file:", file.name);
 
       // Use relative path to Flask backend
-      const ML_API_URL = "http://localhost:10000/predict"; // Flask API port
+      const ML_API_URL = "/predict"; // Flask API port
 
       const formData = new FormData();
       formData.append("file", file);
