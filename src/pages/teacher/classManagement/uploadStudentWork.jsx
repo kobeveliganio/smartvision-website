@@ -22,21 +22,23 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const fileName = `${student.student_id}_${Date.now()}.${fileExt}`;
       console.log("📤 Starting upload for file:", file.name);
 
-      // Use relative path to Flask backend
-      const ML_API_URL = "/predict"; // Flask API port
+      // ✅ Use relative URL for live deployment
+      const ML_API_URL = "/predict";
 
       const formData = new FormData();
       formData.append("file", file);
 
       console.log("🌐 Sending request to ML API...");
 
-      const ML_API_KEY = "my-secret-key-123";
+      // ML API Key stored in environment variable on Render
+      const ML_API_KEY = process.env.REACT_APP_ML_API_KEY || "my-secret-key-123";
+
       const response = await fetch(ML_API_URL, {
-          method: "POST",
-          headers: {
-              Authorization: `Bearer ${ML_API_KEY}`,
-          },
-          body: formData,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${ML_API_KEY}`,
+        },
+        body: formData,
       });
 
       if (!response.ok) {

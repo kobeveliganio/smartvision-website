@@ -3,19 +3,32 @@ from flask_cors import CORS
 from ultralytics import YOLO
 import cv2, numpy as np, io, base64, os
 from PIL import Image
+import requests  # <-- make sure requests is imported
+import os
 
 app = Flask(__name__, static_folder="dist", static_url_path="/")
 
 # Enable CORS for dev only (React dev server)
 CORS(app, resources={r"/predict": {"origins": "*"}})
 
+MODEL_URL = "https://fhndnywkzwkptizfshci.supabase.co/storage/v1/object/public/ml-server/best.pt"
+MODEL_PATH = "best.pt"
+
 # Load YOLO model
-model = None
 def get_model():
     global model
     if model is None:
         try:
-            model = YOLO("best.pt")
+            # Download the model if it doesn't exist locally
+            if not os.path.exists(MODEL_PATH):
+                print("⬇️ Downloading YOLO model from Supabase...")
+                r = requests.get(MODEL_URL)
+                r.raise_for_status()  # Raise error if download fails
+                with open(MODEL_PATH, "wb") as f:
+                    f.write(r.content)
+                print("✅ Model downloaded successfully.")
+
+            model = YOLO(MODEL_PATH)
             print("✅ YOLO model loaded successfully.")
         except Exception as e:
             print("❌ Failed to load YOLO model:", e)
