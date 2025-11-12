@@ -172,7 +172,7 @@ export default function UploadStudentWork({ student, classId, onClose, onUploadC
       const fileName = `${student.student_id}_${Date.now()}.${fileExt}`;
       console.log("📤 Starting upload for file:", file.name);
 
-      const ML_API_URL = "/predict";
+      const ML_API_URL = "https://braille-ml-api.onrender.com/predict";
       const ML_API_KEY = "my-secret-key-123";
 
       // ✅ Use FormData instead of manually building multipart
