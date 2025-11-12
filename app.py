@@ -11,7 +11,7 @@ app = Flask(__name__, static_folder="dist", static_url_path="/")
 # Enable CORS for dev only (React dev server)
 CORS(app, resources={r"/predict": {"origins": "*"}})
 
-MODEL_URL = "https://fhndnywkzwkptizfshci.supabase.co/storage/v1/object/public/ml-server/best.pt"
+SUPABASE_MODEL_URL = "https://fhndnywkzwkptizfshci.supabase.co/storage/v1/object/public/ml-server/best.pt"
 MODEL_PATH = "best.pt"
 
 # Load YOLO model
@@ -19,14 +19,14 @@ def get_model():
     global model
     if model is None:
         try:
-            # Download the model if it doesn't exist locally
-            if not os.path.exists(MODEL_PATH):
-                print("⬇️ Downloading YOLO model from Supabase...")
-                r = requests.get(MODEL_URL)
-                r.raise_for_status()  # Raise error if download fails
-                with open(MODEL_PATH, "wb") as f:
-                    f.write(r.content)
-                print("✅ Model downloaded successfully.")
+            # Download model file from Supabase
+            print("⬇️ Downloading YOLO model from Supabase...")
+            response = requests.get(SUPABASE_MODEL_URL)
+            if response.status_code != 200:
+                raise Exception(f"Failed to download model: {response.status_code} {response.text}")
+
+            with open(MODEL_PATH, "wb") as f:
+                f.write(response.content)
 
             model = YOLO(MODEL_PATH)
             print("✅ YOLO model loaded successfully.")
